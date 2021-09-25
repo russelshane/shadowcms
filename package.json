@@ -1,0 +1,16 @@
+{
+  "name": "@shadowcms/shadowcms",
+  "version": "2.1.1",
+  "private": true,
+  "author": {
+    "name": "Shadow CMS",
+    "email": "hello@shadowcms.com",
+    "url": "https://shadowcms.com"
+  },
+  "workspaces": [
+    "api",
+    "server",
+    "client",
+    "web"
+  ]
+}
