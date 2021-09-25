@@ -5,7 +5,7 @@ out/
 build/
 database/
 
-# SECRETS
+# SECRET
 .env
 .env.development
 .env.production
