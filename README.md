@@ -10,28 +10,18 @@
 <p align="center">
   <strong>The Exclusive Content Management System for Newsrooms 🚀</strong>
 </p>
-<div align="center">
-
-[![CircleCI](https://circleci.com/gh/shadowcms/shadow/tree/staging.svg?style=shield)](https://circleci.com/gh/shadowcms/shadow/tree/staging)
-[![CodeQL](https://github.com/shadowcms/shadow/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/shadowcms/shadow/actions/workflows/codeql-analysis.yml)
-![Twitter URL](https://img.shields.io/twitter/url?label=Tweet%20%40shadowcms&style=social&url=https%3A%2F%2Fshields.io%2Ftwitter%2Fshadowcms)
-
-</div>
-<br />
 <hr />
-<br />
 
 ## About
 
-Shadow CMS (formerly named Shadow Newsroom System) is a content management system that is
-mainly focused on serving newspapers. The functionality and features of the C.M.S. is
-unique to itself and highly customizable for the specific needs of a newsroom.
+Shadow CMS (formerly named Shadow Newsroom System) is a content management system that is mainly
+focused on serving newspapers. The functionality and features of the C.M.S. is unique to itself and
+highly customizable for the specific needs of a newsroom.
 
 ## Features
 
 - Publish, create or edit digital and print versions of news articles and editorials
-- Use a powerful, collaborative rich text editor when publishing, creating, or editing an
-  article
+- Use a powerful, collaborative rich text editor when publishing, creating, or editing an article
 - Update or create live stories that is currently happening in real time
 - Create or choose from a variety of templates that can be used for articles
 - Edit newsroom sections, subsections, topics, and other algorithmic items
@@ -41,8 +31,8 @@ unique to itself and highly customizable for the specific needs of a newsroom.
 
 ## Contributions
 
-Anyone can contribute code, although we focus on people who are part of the Shadow CMS
-team. You can PR the staging branch. <br /> <br />
+Anyone can contribute code, although we focus on people who are part of the Shadow CMS team. You can
+PR the staging branch. <br /> <br />
 
 <hr />
 <br />
