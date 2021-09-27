@@ -3,7 +3,7 @@
  * @author ShadowCMS
  */
 
-import Logger from "../utilities/logger";
+import Logger from "../util/logger";
 import Koa, { DefaultState, DefaultContext } from "koa";
 import { createConnection, Connection } from "typeorm";
 import { config } from "dotenv";

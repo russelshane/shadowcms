@@ -8,7 +8,7 @@
 import "reflect-metadata";
 import Koa, { DefaultContext, DefaultState } from "koa";
 import connectPostgres from "./services/connect-postgres";
-import Logger from "./utilities/logger";
+import Logger from "./util/logger";
 import { createKoaServer } from "routing-controllers";
 import { UsersController } from "./controllers/users.controller";
 
