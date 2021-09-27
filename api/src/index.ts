@@ -5,11 +5,12 @@
  * @author ShadowCMS
  */
 
+import "reflect-metadata";
 import Koa, { DefaultContext, DefaultState } from "koa";
-import Router from "koa-router";
-import DefaultAPIRoute from "./routes/default-route";
 import connectPostgres from "./services/connect-postgres";
 import Logger from "./utilities/logger";
+import { createKoaServer } from "routing-controllers";
+import { UsersController } from "./controllers/users.controller";
 
 /**
  * Initialize ShadowCMS Logger
@@ -21,23 +22,16 @@ const launch = async () => {
    * Initialize API Environment
    */
   const PORT = process.env.PORT || 5000;
-  const api: Koa<DefaultState, DefaultContext> = new Koa();
-  const router: Router = new Router();
-
-  /**
-   * REST / Node Routes
-   */
-  router.get("/", DefaultAPIRoute);
-
-  /**
-   * Get API Middlewares
-   */
-  api.use(router.routes()).use(router.allowedMethods());
+  const api: Koa<DefaultState, DefaultContext> = createKoaServer({
+    controllers: [UsersController],
+  });
 
   /**
    * Connect to Databases
    */
-  await connectPostgres(api);
+  await connectPostgres(api).catch((err) => {
+    logger.error(err);
+  });
 
   /**
    * Initialize API
