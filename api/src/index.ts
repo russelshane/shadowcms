@@ -11,6 +11,7 @@ import connectPostgres from "./services/connect-postgres";
 import Logger from "./util/logger";
 import { createKoaServer } from "routing-controllers";
 import { UsersController } from "./controllers/users.controller";
+import { NewsArticlesController } from "./controllers/news.controller";
 
 /**
  * Initialize ShadowCMS Logger
@@ -23,7 +24,7 @@ const launch = async () => {
    */
   const PORT = process.env.PORT || 5000;
   const api: Koa<DefaultState, DefaultContext> = createKoaServer({
-    controllers: [UsersController],
+    controllers: [UsersController, NewsArticlesController],
   });
 
   /**

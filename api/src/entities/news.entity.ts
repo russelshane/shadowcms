@@ -8,7 +8,7 @@ import { SharedProp } from "./shared-prop.entity";
 
 @Entity({ name: "news" })
 export class NewsArticlesEntity extends SharedProp {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("increment")
   id: number;
 
   /**

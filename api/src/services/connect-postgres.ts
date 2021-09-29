@@ -30,6 +30,7 @@ const connectPostgres = async (api: Koa<DefaultState, DefaultContext>): Promise<
       rejectUnauthorized: false,
     },
     entities: [UsersEntity, NewsArticlesEntity],
+    synchronize: true,
   });
 
   await connection
