@@ -6,6 +6,9 @@
 import { Controller, Get, Post, Param, Body, Patch, Delete, Ctx } from "routing-controllers";
 import { UsersEntity } from "../entities/users.entity";
 import { CTX } from "../interfaces/ctx.interface";
+import Logger from "../util/logger";
+
+const logger = Logger();
 
 @Controller("/api/v8/users")
 export class UsersController {
@@ -14,11 +17,11 @@ export class UsersController {
    * CAUTION: possible big data
    */
   @Get()
-  getAll(@Ctx() ctx: CTX) {
+  async getAll(@Ctx() ctx: CTX) {
     /**
      * Retrieve all useres with users entity created with TypeORM
      */
-    const res = ctx.db.createQueryBuilder(UsersEntity, "users").orderBy("users.id", "DESC").getMany();
+    const res = await ctx.db.createQueryBuilder(UsersEntity, "users").orderBy("users.id", "DESC").getMany();
 
     return {
       error: false,
@@ -29,36 +32,61 @@ export class UsersController {
   /**
    * @description Get one user by unique id
    */
-  @Get("/user/:id")
-  getOne(@Param("id") id: number) {
-    return `Returning user with id: ${id}`;
+  @Get("/user/:ein")
+  async getOne(@Param("ein") ein: number, @Ctx() ctx: CTX) {
+    const res = await ctx.db.getRepository("users").findOne({ ein });
+
+    return {
+      error: false,
+      result: res,
+    };
   }
 
   /**
    * @description Create / add a new user to the database
    */
   @Post("/add")
-  post(@Body() user: any) {
-    return { save: true, user };
+  async post(@Body() user: any, @Ctx() ctx: CTX) {
+    const newUser = await ctx.db.getRepository("users").insert(user);
+
+    if (!newUser) {
+      return {
+        error: true,
+        message: "Unknown error occured while adding new user.",
+      };
+    }
+
+    const getNewUser = await ctx.db.getRepository("users").findOne({ ein: user.ein });
+
+    return { save: true, user: getNewUser };
   }
 
   /**
    * @description Update the information of an existing user
    */
-  @Patch("/update/:id")
-  put(@Param("id") id: number, @Body() user: any) {
+  @Patch("/update/:ein")
+  async put(@Param("ein") ein: number, @Body() user: any, @Ctx() ctx: CTX) {
+    try {
+      await ctx.db.getRepository("users").update({ ein }, { ...user });
+    } catch (err) {
+      logger.error(`Error while updating user data. Details: `, err);
+    }
+
+    const data = await ctx.db.getRepository("users").findOne({ ein });
+
     return {
       update: true,
-      user,
-      id,
+      data,
     };
   }
 
   /**
    * @description Delete a user from the database by id
    */
-  @Delete("/delete/:id")
-  remove(@Param("id") id: number) {
-    return `Removed user ${id}`;
+  @Delete("/delete/:ein")
+  async remove(@Param("ein") ein: number, @Ctx() ctx: CTX) {
+    await ctx.db.getRepository("users").delete({ ein });
+
+    return `Removed user with EIN: ${ein}`;
   }
 }

@@ -22,9 +22,9 @@ export class NewsArticlesController {
      * Retrieve all useres with users entity created with TypeORM
      */
     const res = await ctx.db
-      .getRepository(NewsArticlesEntity)
-      .find()
-      .catch((err) => console.log(err));
+      .createQueryBuilder(NewsArticlesEntity, "news")
+      .orderBy("news.updated_at", "DESC")
+      .getMany();
 
     if (!res) {
       return {
@@ -42,13 +42,13 @@ export class NewsArticlesController {
   /**
    * @description Get one user by unique id
    */
-  @Get("/:id")
-  async getOne(@Param("id") id: number, @Ctx() ctx: CTX) {
-    const res = await ctx.db.getRepository("news").findOne({ id });
+  @Get("/:docId")
+  async getOne(@Param("docId") docId: string, @Ctx() ctx: CTX) {
+    const res = await ctx.db.getRepository("news").findOne({ docId: docId });
 
     return {
       error: false,
-      results: res,
+      result: res,
     };
   }
 
@@ -74,17 +74,20 @@ export class NewsArticlesController {
   /**
    * @description Save new data of news article
    */
-  @Patch("/update/:id")
-  async put(@Param("id") id: number, @Body() article: any, @Ctx() ctx: CTX) {
+  @Patch("/update/:docId")
+  async put(@Param("docId") docId: string, @Body() article: any, @Ctx() ctx: CTX) {
     try {
-      await ctx.db.getRepository("news").update(id, {
-        ...article,
-      });
+      await ctx.db.getRepository("news").update(
+        { docId },
+        {
+          ...article,
+        },
+      );
     } catch (err) {
       logger.error(`Error while updating news article. Details: `, err);
     }
 
-    const data = await ctx.db.getRepository("news").findOne({ id });
+    const data = await ctx.db.getRepository("news").findOne({ docId: docId });
 
     return {
       update: true,
@@ -95,9 +98,9 @@ export class NewsArticlesController {
   /**
    * @description Delete a news article from the database by id
    */
-  @Delete("/delete/:id")
-  async remove(@Param("id") id: number, @Ctx() ctx: CTX) {
-    const deleteArticle = await ctx.db.getRepository("news").delete({ id });
+  @Delete("/delete/:docId")
+  async remove(@Param("docId") docId: string, @Ctx() ctx: CTX) {
+    const deleteArticle = await ctx.db.getRepository("news").delete({ docId: docId });
 
     if (!deleteArticle) {
       logger.error(`Unknown error occured while deleting article.`);
@@ -108,6 +111,6 @@ export class NewsArticlesController {
       };
     }
 
-    return `Removed article with ID: ${id}`;
+    return `Removed article with ID: ${docId}`;
   }
 }

@@ -29,7 +29,7 @@ export class UsersEntity {
   @Column({ name: "avatar", nullable: true })
   avatar?: string;
 
-  @Column({ default: "user" })
+  @Column({ default: "reporter" })
   account_type: UserType;
 
   @Column({ nullable: false })
