@@ -7,8 +7,6 @@ import Logger from "../util/logger";
 import Koa, { DefaultState, DefaultContext } from "koa";
 import { createConnection, Connection } from "typeorm";
 import { config } from "dotenv";
-import { UsersEntity } from "../entities/users.entity";
-import { NewsArticlesEntity } from "../entities/news.entity";
 
 /**
  * Initialize API Secrets and custom
@@ -29,12 +27,16 @@ const connectPostgres = async (api: Koa<DefaultState, DefaultContext>): Promise<
     ssl: {
       rejectUnauthorized: false,
     },
-    entities: [UsersEntity, NewsArticlesEntity],
+    entities: ["dist/entities/*.js"],
     synchronize: true,
+    logging: true,
   });
 
+  /**
+   * Create connection
+   */
   await connection
-    .synchronize(true)
+    .synchronize(false)
     .then(() => {
       logger.info(`🟢 Connected to PostgreSQL Database!`);
     })

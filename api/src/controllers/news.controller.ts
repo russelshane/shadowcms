@@ -96,7 +96,18 @@ export class NewsArticlesController {
    * @description Delete a news article from the database by id
    */
   @Delete("/delete/:id")
-  remove(@Param("id") id: number) {
-    return `Removed user ${id}`;
+  async remove(@Param("id") id: number, @Ctx() ctx: CTX) {
+    const deleteArticle = await ctx.db.getRepository("news").delete({ id });
+
+    if (!deleteArticle) {
+      logger.error(`Unknown error occured while deleting article.`);
+
+      return {
+        error: true,
+        message: "Unknown error occured while deleting article.",
+      };
+    }
+
+    return `Removed article with ID: ${id}`;
   }
 }

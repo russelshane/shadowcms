@@ -3,16 +3,24 @@
  * @author ShadowCMS
  */
 
+import dayjs from "dayjs";
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
-import { SharedProp } from "./shared-prop.entity";
+
+const newDate = dayjs().format("YYYY-MM-DDTHH:mm:ssZ");
 
 @Entity({ name: "news" })
-export class NewsArticlesEntity extends SharedProp {
+export class NewsArticlesEntity {
   @PrimaryGeneratedColumn("increment")
   id: number;
 
+  @Column({ name: "created_at", nullable: false, default: `${newDate}` })
+  created_at: string;
+
+  @Column({ name: "updated_at", nullable: false, default: `${newDate}` })
+  updated_at: string;
+
   /**
-   * Lede data of news article
+   * Lede/main data of news article
    */
   @Column({ name: "docId", nullable: false })
   docId: string;
