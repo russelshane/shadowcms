@@ -27,7 +27,7 @@
     "koa-router": "^10.1.1",
     "koa2-cors": "^2.0.6",
     "micro-memoize": "^4.0.9",
-    "nanoid": "^3.1.28",
+    "nanoid": "^3.1.29",
     "nodemon": "^2.0.13",
     "pg": "^8.7.1",
     "pino": "^6.13.3",
