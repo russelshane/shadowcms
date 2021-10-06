@@ -21,7 +21,10 @@ export class UsersController {
     /**
      * Retrieve all useres with users entity created with TypeORM
      */
-    const res = await ctx.db.createQueryBuilder(UsersEntity, "users").orderBy("users.id", "DESC").getMany();
+    const res = await ctx.db
+      .createQueryBuilder(UsersEntity, "users")
+      .orderBy("users.id", "DESC")
+      .getMany();
 
     return {
       error: false,

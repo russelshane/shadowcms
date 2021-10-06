@@ -12,14 +12,10 @@ const logger = Logger();
 
 @Controller("/api/v8/news")
 export class NewsArticlesController {
-  /**
-   * @description Get all users from database
-   * CAUTION: possible big data
-   */
   @Get()
   async getAll(@Ctx() ctx: CTX) {
     /**
-     * Retrieve all useres with users entity created with TypeORM
+     * Retrieve all articles. CAUTION: Big Data
      */
     const res = await ctx.db
       .createQueryBuilder(NewsArticlesEntity, "news")
@@ -40,7 +36,56 @@ export class NewsArticlesController {
   }
 
   /**
-   * @description Get one user by unique id
+   * Retrieve articles that are already published
+   */
+  @Get("/articles/published")
+  async getPublished(@Ctx() ctx: CTX) {
+    const res = await ctx.db
+      .createQueryBuilder(NewsArticlesEntity, "news")
+      .where({ status: "published" })
+      .orderBy("news.updated_at", "DESC")
+      .getMany();
+
+    if (!res) {
+      return {
+        error: false,
+        message: "This newsroom has no published articles.",
+      };
+    }
+
+    return {
+      error: false,
+      results: res,
+    };
+  }
+
+  /**
+   * Retrieve incoming articles (unpublished) such as needs-editing,
+   * needs-review, in-progress, in-review, etc.
+   */
+  @Get("/articles/incoming")
+  async getIncoming(@Ctx() ctx: CTX) {
+    const res = await ctx.db
+      .createQueryBuilder(NewsArticlesEntity, "news")
+      .where({ status: "in-progress" || "in-review" || "needs-editing" || "needs-review" })
+      .orderBy("news.updated_at", "DESC")
+      .getMany();
+
+    if (!res) {
+      return {
+        error: false,
+        message: "No Incoming Articles",
+      };
+    }
+
+    return {
+      error: false,
+      results: res,
+    };
+  }
+
+  /**
+   * @description Get one article by document id
    */
   @Get("/:docId")
   async getOne(@Param("docId") docId: string, @Ctx() ctx: CTX) {
