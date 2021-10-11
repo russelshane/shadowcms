@@ -1,6 +1,6 @@
 /**
- * Main codebase for the API Service that are currently
- * being used for Shadow CMS
+ * Staging codebase for the API Service. This is not for production!
+ * The folder api-production contains the code for production.
  *
  * @author ShadowCMS
  */
