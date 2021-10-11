@@ -1,5 +1,6 @@
 /**
- * Main REST and GraphQL API Service for Shadow CMS
+ * Main codebase for the API Service that are currently
+ * being used for Shadow CMS
  *
  * @author ShadowCMS
  */
