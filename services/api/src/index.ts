@@ -1,29 +1,52 @@
 /**
- * Main codebase for the API Service. This code may be
- * pushed for production.
+ * Updated reusable Node and GraphQL API for
+ * Shadow C.M.S. clients
  *
  * @author ShadowCMS
  */
 
-import CONFIG from './config/server';
-import logger from './utilities/logger';
-import express, { Express } from 'express';
+import 'reflect-metadata';
+import connectPostgres from './services/ConnectPostgres';
+import logger from './util/logger';
+import Koa, { DefaultContext, DefaultState } from 'koa';
+import { createKoaServer } from 'routing-controllers';
+import { PrimaryRouteController } from './controllers/PrimaryRouteController';
 
 const LAUNCH = async () => {
-  /* New Express App Instance */
-  const api: Express = express();
-  const PORT = CONFIG.PORT || 5333;
+  /**
+   * Initialize API Environment
+   */
+  const PORT = process.env.PORT || 5000;
+  const api: Koa<DefaultState, DefaultContext> = createKoaServer({
+    controllers: [PrimaryRouteController],
+  });
 
-  /* Initialize API Middlewares */
-  api.use(express.json());
+  /**
+   * Connect to Databases
+   */
+  await connectPostgres(api).catch((err) => {
+    logger.error(err);
+  });
 
-  /* Initialize API and Connect to Databases */
-  api.listen(PORT, async () => {
-    logger.info(`🚀 Shadow CMS API is running! Current Port: ${PORT}`);
+  /**
+   * Initialize API
+   */
+  api.listen(PORT).on('listening', () => {
+    logger.info('🟢 Connected to all databases...');
+
+    /**
+     * Signal that the API is running once all databases
+     * are connected successfully.
+     */
+    setTimeout(() => {
+      logger.info('🟢 ShadowCMS API is running. 🚀');
+    }, 1000);
   });
 };
 
-/* Launch API */
+/**
+ * Launch API
+ */
 LAUNCH().catch((err) => {
-  logger.error(`🔴 Error while trying to launch server. Details: ${err}`);
+  logger.error(`🚨 Failed to start API. Details: `, err);
 });

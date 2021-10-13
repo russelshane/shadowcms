@@ -1,8 +1,5 @@
 /**
- * Custom ShadowCMS API Service Logging Tool,
- * Logs all requests, responses, errors, etc. to the console.
- * All code should not be using console.log()
- *
+ * @description Custom API Logger
  * @author ShadowCMS
  */
 
@@ -11,8 +8,8 @@ import pino from 'pino';
 
 export type ShadowLogger = pino.Logger;
 
-const logger = memoize(
-  (name = 'shadowcms') =>
+export default memoize(
+  (name = 'shadow') =>
     pino({
       name,
       enabled: true,
@@ -22,5 +19,3 @@ const logger = memoize(
       },
     }) as ShadowLogger,
 )();
-
-export default logger;

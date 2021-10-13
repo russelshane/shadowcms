@@ -1,31 +1,38 @@
 /**
- * Users TypeORM Entity
+ * User TypeORM Entity for ShadowCMS
  *
  * @author ShadowCMS
  */
 
 import dayjs from 'dayjs';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { UserRolesType } from './types';
 
-const generateDate = dayjs().format('YYYY-MM-DD HH:mm:ss');
+const newDate = dayjs().format('YYYY-MM-DD HH:mm:ss');
 
-@Entity()
+@Entity({ name: 'users' })
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
-  @Column({ type: 'datetime', default: `${generateDate}` })
-  createdAt: Date;
+  @Column({ default: `${newDate}` })
+  createdAt: string;
 
-  @Column({ type: 'datetime', default: `${generateDate}`, onUpdate: `${generateDate}` })
-  updatedAt: Date;
+  @Column({ default: `${newDate}`, onUpdate: `${newDate}` })
+  updatedAt: string;
 
-  @Column()
+  @Column({ nullable: true })
   ein: string;
+
+  @Column({ nullable: true })
+  password: string;
 
   @Column({ nullable: true })
   byline?: string;
 
   @Column({ nullable: true })
   avatar?: string;
+
+  @Column({ default: 'reporter' })
+  role: UserRolesType;
 }
