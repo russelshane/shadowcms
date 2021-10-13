@@ -7,6 +7,12 @@
 # dependencies
 /node_modules
 
+# secrets
+.env
+.env.development
+.env.production
+.env.local
+
 # IDEs and editors
 /.idea
 .project
