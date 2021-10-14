@@ -1,52 +1,40 @@
 /**
- * @description Connection to PostgreSQL Database
+ * Function to connect to the PostgreSQL Database
+ *
  * @author ShadowCMS
  */
 
-import logger from '../util/logger';
-import Koa, { DefaultState, DefaultContext } from 'koa';
-import { createConnection, Connection } from 'typeorm';
-import { config } from 'dotenv';
+import dotenv from "dotenv";
+import logger from "../util/logger";
+import { createConnection } from "typeorm";
 
-/**
- * Initialize API Secrets and custom
- * ShadowCMS Logger
- */
-config();
-const { DATABASE_URL } = process.env;
+dotenv.config();
 
-/**
- * Function to connect to PostgreSQL Database.
- * Must be a connection string using typeorm.
- */
-const connectPostgres = async (api: Koa<DefaultState, DefaultContext>): Promise<void> => {
-  const connection: Connection = await createConnection({
-    type: 'postgres',
+const ConnectPostgres = async () => {
+  const { DATABASE_URL } = process.env;
+
+  /**
+   * Attempt a connection to the PostgreSQL database
+   */
+  await createConnection({
+    type: "postgres",
     url: DATABASE_URL as string,
     ssl: {
       rejectUnauthorized: false,
     },
-    entities: ['dist/entities/*.js'],
+    entities: ["dist/entity/*.js"],
+    migrations: ["dist/migration/*.js"],
     synchronize: true,
-    logging: true,
-  });
-
-  /**
-   * Create connection
-   */
-  await connection
-    .synchronize(true)
+    logging: false,
+  })
     .then(() => {
-      logger.info(`🟢 Connected to PostgreSQL Database!`);
+      logger.info(`🟢 API is connected to PostgreSQL Database!`);
     })
-    .catch((err) => {
-      logger.error(`🚨 Failed to synchronize with PostgreSQL Database. Details: `, err);
+    .catch((error) => {
+      logger.error(
+        `Error while trying to connect to PostgreSQL Database. Details: ${error}`,
+      );
     });
-
-  /**
-   * Pass database connection as koa context
-   */
-  api.context.db = connection;
 };
 
-export default connectPostgres;
+export default ConnectPostgres;
