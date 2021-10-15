@@ -4,14 +4,14 @@
  * @author Shadow CMS
  */
 
-import { Spinner, Pane } from 'evergreen-ui';
+import { Flex, Heading } from 'rebass';
 import React from 'react';
 
 const ScreenLoader: React.FC = () => {
   return (
-    <Pane display="flex" justifyContent="center" alignItems="center" height="95vh">
-      <Spinner size={40} />
-    </Pane>
+    <Flex display="flex" justifyContent="center" alignItems="center" height="95vh">
+      <Heading size="30">Loading...</Heading>
+    </Flex>
   );
 };
 

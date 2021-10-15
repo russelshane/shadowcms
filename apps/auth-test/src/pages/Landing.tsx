@@ -6,7 +6,7 @@
 
 import React, { useEffect } from 'react';
 import Header from '../components/Header';
-import { Heading, Pane, Text, Avatar } from 'evergreen-ui';
+import { Heading, Box, Flex, Text, Image } from 'rebass';
 import ScreenLoader from '../components/ScreenLoader';
 import { useGetUsersQuery } from '../generated/graphql';
 
@@ -22,40 +22,48 @@ const Landing: React.FC = () => {
   }
 
   if (error) {
-    return <p>Error: {error}</p>;
+    console.log(error);
+    return <p>Error, check console.</p>;
   }
 
   return (
-    <Pane
+    <Flex
       display="flex"
       justifyContent="center"
       alignItems="center"
       padding={20}
       flexDirection="column"
-      gridGap="30px"
     >
       <Header />
       {data && (
         <React.Fragment>
-          {data?.getUsers?.map((val: any, index: any) => (
-            <Pane
+          {data.getUsers.map((val: any, index: any) => (
+            <Box
               display="flex"
               key={index}
               flexDirection="column"
-              gridGap="10px"
               width="300px"
-              background="lightgray"
+              backgroundColor="#d9d9d9"
               padding={16}
-              borderRadius={5}
+              mb={3}
             >
-              <Avatar src={val.avatar} />
+              <Image
+                src={val.avatar}
+                sx={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: 9999,
+                }}
+              />
+              <br />
               <Heading>{val.byline}</Heading>
+              <br />
               <Text>@{val.username}</Text>
-            </Pane>
+            </Box>
           ))}
         </React.Fragment>
       )}
-    </Pane>
+    </Flex>
   );
 };
 

@@ -13,6 +13,7 @@ import ScreenLoader from './components/ScreenLoader';
 const Landing = lazy(() => import('./pages/Landing'));
 const Register = lazy(() => import('./pages/Register'));
 const Login = lazy(() => import('./pages/Login'));
+const Me = lazy(() => import('./pages/Me'));
 
 const App: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ const App: React.FC = () => {
           <Route exact path="/" component={Landing} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/me" component={Me} />
         </Switch>
       </Suspense>
     </Router>

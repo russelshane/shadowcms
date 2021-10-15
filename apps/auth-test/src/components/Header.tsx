@@ -5,26 +5,38 @@
  */
 
 import React from 'react';
-import { Pane, Heading, Text, Button } from 'evergreen-ui';
+import { Flex, Button, Heading, Text } from 'rebass';
 import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
   return (
-    <Pane display="flex" alignItems="center" flexDirection="column" gridGap="10px">
-      <Pane display="flex" gridGap="10px">
+    <Flex
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Flex display="flex">
         <Link to="/">
-          <Button>Home</Button>
+          <Button variant="primary" style={{ background: '#777' }} marginRight={10}>
+            Home
+          </Button>
         </Link>
         <Link to="/register">
-          <Button>Register</Button>
+          <Button marginRight={10} style={{ background: '#777' }}>
+            Register
+          </Button>
         </Link>
         <Link to="/login">
-          <Button>Login</Button>
+          <Button style={{ background: '#777' }}>Login</Button>
         </Link>
-      </Pane>
-      <Heading size={800}>Authentication Security Testing</Heading>
-      <Text>Shadow CMS</Text>
-    </Pane>
+      </Flex>
+      <br />
+      <Heading>Authentication Security Testing</Heading>
+      <Text mt={1} mb={5}>
+        Shadow CMS
+      </Text>
+    </Flex>
   );
 };
 

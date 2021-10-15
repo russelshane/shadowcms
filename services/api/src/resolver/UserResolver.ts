@@ -62,7 +62,7 @@ export class UserRolver {
 
     logger.info(`@${name} accessed there account details on ${newDate}`);
 
-    return `Hi ${name}`;
+    return `Hi ${name} your user id is ${payload.userId} and you're a ${payload.role}`;
   }
 
   /**

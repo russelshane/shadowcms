@@ -29,6 +29,16 @@ const LAUNCH = async () => {
   const api = express();
   const PORT = process.env.PORT || 5000;
   const newDate = dayjs().format("MMMM, D, YYYY HH:mm:ss");
+  const whitelist = ["http://localhost:3000", "http://localhost:5000"];
+  const corsOptions = {
+    credentials: true, // This is important.
+    origin: (origin, callback) => {
+      if (whitelist.includes(origin)) return callback(null, true);
+
+      callback(new Error("Not allowed by CORS"));
+    },
+  };
+  await api.use(cors(corsOptions)); /* CORS Middleware */
 
   /**
    * Connect to PostgreSQL Database
@@ -69,9 +79,8 @@ const LAUNCH = async () => {
    * Integrate Apollo Server with Express,
    * and initialize other API middlewares
    */
-  apolloServer.applyMiddleware({ app: api, path: "/graphql" });
-  api.use(cors()); /* CORS Middleware */
   api.use(cookieParser()); /* Cookie Parser Middleware */
+  apolloServer.applyMiddleware({ app: api, path: "/graphql", cors: { ...corsOptions } });
 
   /* Default API Route */
   api.get("/", (_, res) => {

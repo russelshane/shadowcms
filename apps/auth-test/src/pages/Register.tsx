@@ -4,16 +4,18 @@
  * @author ShadowCMS
  */
 
-import { Pane, Select, Text, TextInput, Button } from 'evergreen-ui';
+import { Flex, Text, Button } from 'rebass';
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import { useRegisterMutation } from '../generated/graphql';
+import { useHistory } from 'react-router';
 
 const Register: React.FC = () => {
   useEffect(() => {
     document.title = 'Register - ShadowCMS Authentication Security Testing';
   }, []);
 
+  const history = useHistory();
   const [role, setRole] = useState('admin');
   const [avatar, setAvatar] = useState('');
   const [username, setUsername] = useState('');
@@ -25,13 +27,12 @@ const Register: React.FC = () => {
   console.log(role);
 
   return (
-    <Pane
+    <Flex
       display="flex"
       justifyContent="center"
       alignItems="center"
       padding={20}
       flexDirection="column"
-      gridGap="30px"
     >
       <Header />
       <Text>Register Page</Text>
@@ -52,56 +53,58 @@ const Register: React.FC = () => {
           });
 
           console.log(response);
+
+          history.push('/');
         }}
       >
         <Text>Username</Text>
-        <TextInput
+        <input
           placeholder="Enter a unique username..."
-          marginBottom={20}
-          width="500px"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          style={{ marginBottom: 30, width: '300px' }}
         />
         <br />
         <Text>Password</Text>
-        <TextInput
+        <input
           type="password"
           placeholder="Enter a secure password..."
-          marginBottom={20}
-          width="500px"
+          style={{ marginBottom: 30, width: '300px' }}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
         <br />
         <Text>Byline</Text>
-        <TextInput
+        <input
           placeholder="Enter a newsroom byline..."
-          marginBottom={20}
-          width="500px"
+          style={{ marginBottom: 30, width: '300px' }}
           value={byline}
           onChange={(e) => setByline(e.target.value)}
         />
         <br />
         <Text>Avatar</Text>
-        <TextInput
+        <input
           placeholder="Enter a link to your avatar..."
-          marginBottom={20}
-          width="500px"
+          style={{ marginBottom: 30, width: '300px' }}
           value={avatar}
           onChange={(e) => setAvatar(e.target.value)}
         />
         <br />
         <Text>Pick a Role</Text>
-        <Select value={role} onChange={(event) => setRole(event.target.value)}>
+        <select value={role} onChange={(event) => setRole(event.target.value)}>
           <option value="admin" defaultValue="admin">
             Admin
           </option>
           <option value="reporter">Reporter</option>
-        </Select>
-        <Button type="submit">Register</Button>
+        </select>
+        <br />
+        <br />
+        <Button type="submit" marginRight={10} style={{ background: '#777' }}>
+          Register
+        </Button>
       </form>
-    </Pane>
+    </Flex>
   );
 };
 
