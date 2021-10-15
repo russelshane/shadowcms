@@ -10,7 +10,7 @@ import { compare, hash } from "bcryptjs";
 import { User } from "../entity/User";
 import { UserRoles } from "../types/UserRoles";
 import { ExpressContext } from "../interface/ExpressContext";
-import { createAccessToken, createRefreshToken } from "../auth";
+import { createAccessToken, createRefreshToken, SendRefreshToken } from "../auth";
 import { isAuth } from "../middleware/isAuth";
 import {
   Resolver,
@@ -22,6 +22,7 @@ import {
   Ctx,
   UseMiddleware,
 } from "type-graphql";
+import { getConnection } from "typeorm";
 
 dotenv.config();
 
@@ -65,6 +66,27 @@ export class UserRolver {
   }
 
   /**
+   * Mutation to REVOKE refresh tokens for users
+   */
+  @Mutation(() => Boolean)
+  async revokeRefreshTokensForUser(@Arg("userId") userId: string) {
+    logger.info(
+      `Request to revoke all tokens for User with id ${userId} successful on ${newDate}`,
+    );
+
+    await getConnection()
+      .getRepository(User)
+      .increment({ id: userId }, "tokenVersion", 1)
+      .catch((err) => {
+        logger.error(
+          `Request to revoke all tokens for User with id ${userId} failed on ${newDate}. Details: ${err}`,
+        );
+      });
+
+    return true;
+  }
+
+  /**
    * Mutation to LOGIN a user and send authentication
    * tokens.
    */
@@ -104,10 +126,7 @@ export class UserRolver {
      * Send refresh token, cookie should be using httpOnly
      */
     logger.info(`Refresh and access token created for @${username} on ${newDate}`);
-    res.cookie("jid", createRefreshToken(user), {
-      httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 7,
-    });
+    SendRefreshToken(res, createRefreshToken(user));
 
     return {
       accessToken: createAccessToken(user),
