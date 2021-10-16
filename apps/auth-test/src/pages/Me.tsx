@@ -18,7 +18,16 @@ const Me: React.FC = () => {
 
   if (error) {
     console.log(error);
-    return <div>error, check console</div>;
+    return (
+      <Text>
+        {error.message ===
+          'GraphQL error: You do not have permission to access this route.' && (
+          <Text>
+            You are not logged in. <a href="/login">Login Here</a>
+          </Text>
+        )}
+      </Text>
+    );
   }
 
   if (!data) {

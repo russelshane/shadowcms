@@ -3,8 +3,8 @@ import ApolloClient from 'apollo-boost';
 import App from './App';
 import { render } from 'react-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
-import './styles/main.css';
 import { getAccessToken } from './safe/accessToken';
+import './styles/main.css';
 
 const apolloClient: any = new ApolloClient({
   uri: 'http://localhost:5000/graphql',
@@ -23,8 +23,10 @@ const apolloClient: any = new ApolloClient({
 });
 
 render(
-  <ApolloProvider client={apolloClient}>
-    <App />
-  </ApolloProvider>,
+  <React.Fragment>
+    <ApolloProvider client={apolloClient}>
+      <App />
+    </ApolloProvider>
+  </React.Fragment>,
   document.getElementById('root'),
 );
