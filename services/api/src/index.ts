@@ -18,6 +18,7 @@ import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { UserRolver } from "./resolver/UserResolver";
 import { RefreshTokenController } from "./controller/RefreshTokenController";
+import { ArticleResolver } from "./resolver/ArticleResolver";
 
 dotenv.config();
 
@@ -29,7 +30,7 @@ const LAUNCH = async () => {
   const api = express();
   const PORT = process.env.PORT || 5000;
   const newDate = dayjs().format("MMMM, D, YYYY HH:mm:ss");
-  const whitelist = ["http://localhost:3000", "http://localhost:5000"];
+  const whitelist = ["http://localhost:5000", "http://localhost:3000"];
   const corsOptions = {
     credentials: true, // This is important.
     origin: (origin, callback) => {
@@ -38,7 +39,7 @@ const LAUNCH = async () => {
       callback(new Error("Not allowed by CORS"));
     },
   };
-  await api.use(cors(corsOptions)); /* CORS Middleware */
+  await api.use(cors()); /* CORS Middleware */
 
   /**
    * Connect to PostgreSQL Database
@@ -52,7 +53,7 @@ const LAUNCH = async () => {
   const apolloServer = new ApolloServer({
     introspection: true,
     schema: await buildSchema({
-      resolvers: [UserRolver],
+      resolvers: [UserRolver, ArticleResolver],
     }),
 
     /**
@@ -80,7 +81,7 @@ const LAUNCH = async () => {
    * and initialize other API middlewares
    */
   api.use(cookieParser()); /* Cookie Parser Middleware */
-  apolloServer.applyMiddleware({ app: api, path: "/graphql", cors: { ...corsOptions } });
+  apolloServer.applyMiddleware({ app: api, path: "/graphql" });
 
   /* Default API Route */
   api.get("/", (_, res) => {
