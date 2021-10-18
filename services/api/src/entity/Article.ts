@@ -1,5 +1,6 @@
 /**
  * TypeORM Entity for ShadowCMS Articles
+ * This is temporary, until we have a proper article entity.
  *
  * @author ShadowCMS
  */
@@ -48,6 +49,10 @@ export class Article extends BaseEntity {
   @Column({ default: null, onUpdate: `${newDate}`, nullable: true })
   editedAt?: string;
 
+  @Field({ nullable: true })
+  @Column({ type: "boolean", default: false })
+  unpublished?: boolean;
+
   /**
    * Headline is the title displayed on the article page,
    * not on home page/search results.
@@ -65,6 +70,13 @@ export class Article extends BaseEntity {
   summary?: string;
 
   /**
+   * Bylines in full HTML string
+   */
+  @Field({ nullable: true })
+  @Column({ type: "text", nullable: true })
+  bylines?: string;
+
+  /**
    * HTML Content of the Article
    */
   @Field({ nullable: true })
@@ -72,9 +84,74 @@ export class Article extends BaseEntity {
   body?: string;
 
   /**
-   * Only need sectionId as section will have the subsections
+   * Section, subsection, topics, and other tags
    */
   @Field({ nullable: true })
-  @Column({ type: "int", nullable: true })
-  sectionId?: number;
+  @Column({ nullable: true })
+  section?: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  subsection?: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  topics?: string;
+
+  /**
+   * SEO fields
+   */
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  publish_url?: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  seo_headline?: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  seo_description?: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  seo_keywords?: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  seo_image?: string;
+
+  /**
+   * Lede Media
+   */
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  media_source?: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  media_type?: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  media_credit?: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  media_description?: string;
+
+  /**
+   * MISC article items
+   */
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  corrections?: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  editors_note?: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  other_notes?: string;
 }

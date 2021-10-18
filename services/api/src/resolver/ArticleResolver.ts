@@ -8,9 +8,6 @@ import logger from "../util/logger";
 import dayjs from "dayjs";
 import { Resolver, Mutation, Arg, Query, Field, Ctx, Int } from "type-graphql";
 import { Article } from "../entity/Article";
-import { ArticleResponse } from "../objects/ArticleResponse";
-import { Section } from "../entity/Section";
-import { Subsection } from "../entity/Subsection";
 
 const newDate = dayjs().format("MMMM, D, YYYY HH:mm:ss");
 
@@ -23,7 +20,7 @@ export class ArticleResolver {
   async latestArticles() {
     logger.info(`Request to fetch latest articles on ${newDate}`);
 
-    const articleResp = await Article.find();
+    const articleResp = await Article.find({ order: { publishedAt: "DESC" } });
 
     return articleResp;
   }
@@ -31,7 +28,7 @@ export class ArticleResolver {
   /**
    * Query to fetch recently updated articles
    */
-  @Query(() => [ArticleResponse])
+  @Query(() => [Article])
   recentlyUpdatedArticles() {
     logger.info(`Request to fetch recently updated articles on ${newDate}`);
 
@@ -41,33 +38,62 @@ export class ArticleResolver {
   /**
    * Mutation for publishing a new article
    */
-  @Mutation(() => ArticleResponse)
+  @Mutation(() => Article)
   async publishArticle(
     @Arg("headline", { nullable: true }) headline?: string,
     @Arg("summary", { nullable: true }) summary?: string,
+    @Arg("bylines", { nullable: true }) bylines?: string,
     @Arg("body", { nullable: true }) body?: string,
-    @Arg("sectionId", { nullable: true }) sectionId?: number,
+    @Arg("section", { nullable: true }) section?: string,
+    @Arg("publish_url", { nullable: true }) publish_url?: string,
+    @Arg("subsection", { nullable: true }) subsection?: string,
+    @Arg("topics", { nullable: true }) topics?: string,
+    @Arg("media_type", { nullable: true }) media_type?: string,
+    @Arg("media_source", { nullable: true }) media_source?: string,
+    @Arg("media_description", { nullable: true }) media_description?: string,
+    @Arg("media_credit", { nullable: true }) media_credit?: string,
+    @Arg("seo_headline", { nullable: true }) seo_headline?: string,
+    @Arg("seo_description", { nullable: true }) seo_description?: string,
+    @Arg("seo_keywords", { nullable: true }) seo_keywords?: string,
+    @Arg("seo_image", { nullable: true }) seo_image?: string,
+    @Arg("corrections", { nullable: true }) corrections?: string,
+    @Arg("editors_note", { nullable: true }) editors_note?: string,
+    @Arg("other_notes", { nullable: true }) other_notes?: string,
+    @Arg("publishedAt", { nullable: true }) publishedAt?: string,
+    @Arg("editedAt", { nullable: true }) editedAt?: string,
+    @Arg("unpublished", { nullable: true }) unpublished?: boolean,
     @Arg("docId") docId?: string,
   ) {
+    logger.info(`New article "${headline}" published on ${newDate}`);
+
     await Article.insert({
       headline,
       summary,
       body,
-      sectionId,
       docId,
+      topics,
+      bylines,
+      corrections,
+      editors_note,
+      publish_url,
+      publishedAt,
+      editedAt,
+      unpublished,
+      other_notes,
+      section,
+      subsection,
+      media_credit,
+      media_description,
+      media_source,
+      media_type,
+      seo_description,
+      seo_headline,
+      seo_image,
+      seo_keywords,
     });
 
-    const articleResp = await Article.findOne({ docId });
-    const sectionResp = await Section.findOne({ id: articleResp.sectionId });
-    const sectionIdx = await sectionResp?.id;
-    const subsectionResp = await Subsection.findOne({ parentId: sectionIdx });
+    const ArticleResponse = await Article.findOne({ docId });
 
-    const Response = {
-      ...articleResp,
-      ...sectionResp,
-      ...subsectionResp,
-    };
-
-    return Response;
+    return ArticleResponse;
   }
 }
