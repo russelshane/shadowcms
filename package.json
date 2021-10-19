@@ -16,7 +16,7 @@
     "services/*"
   ],
   "devDependencies": {
-    "eslint": "7.22.0",
+    "eslint": "8.0.1",
     "eslint-config-prettier": "8.1.0",
     "prettier": "^2.3.1",
     "ts-jest": "27.0.5",
