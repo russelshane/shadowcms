@@ -8,6 +8,7 @@ const COLORS = {
   /* Defaults */
   background: '#F9FAFC',
   foreground: '#474d66',
+  borders: 'rgb(219,219,219)',
 
   /* Static */
   primary: '#2952CC',
