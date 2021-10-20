@@ -76,6 +76,10 @@ export class Article extends BaseEntity {
   @Column({ type: "text", nullable: true })
   bylines?: string;
 
+  @Field({ nullable: true })
+  @Column({ type: "text", nullable: true })
+  bylineUsernames?: string; // array to string -> string to array
+
   /**
    * HTML Content of the Article
    */

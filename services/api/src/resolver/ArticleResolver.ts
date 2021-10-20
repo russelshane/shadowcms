@@ -43,6 +43,7 @@ export class ArticleResolver {
     @Arg("headline", { nullable: true }) headline?: string,
     @Arg("summary", { nullable: true }) summary?: string,
     @Arg("bylines", { nullable: true }) bylines?: string,
+    @Arg("bylineUsernames", { nullable: true }) bylineUsernames?: string, // array to string -> string to array
     @Arg("body", { nullable: true }) body?: string,
     @Arg("section", { nullable: true }) section?: string,
     @Arg("publish_url", { nullable: true }) publish_url?: string,
@@ -73,6 +74,7 @@ export class ArticleResolver {
       docId,
       topics,
       bylines,
+      bylineUsernames,
       corrections,
       editors_note,
       publish_url,
