@@ -15,6 +15,7 @@ import ScreenLoader from './ui/ScreenLoader';
  * Dynamic Components
  */
 const Landing = lazy(() => import('./pages/Landing'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
 
 const Application: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const Application: React.FC = () => {
       <Suspense fallback={<ScreenLoader />}>
         <Switch>
           <Route exact path={ROUTES.LANDING} component={Landing} />
+          <Route exact path={ROUTES.DASHBOARD} component={Dashboard} />
         </Switch>
       </Suspense>
     </Router>

@@ -26,10 +26,12 @@ const Wrapper: React.FC<WrapperProps> = ({
   alignItems,
   flexDirection,
   backgroundColor,
+  gridGap,
 }) => {
   return (
     <WrapperContainer
       style={{
+        gridGap,
         maxWidth,
         width,
         height,

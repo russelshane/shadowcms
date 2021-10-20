@@ -20,6 +20,7 @@ export type WrapperProps = {
   borderRight?: string;
   borderLeft?: string;
   backgroundColor?: string;
+  gridGap?: number | string;
   display?: 'flex' | 'block' | 'inherit';
   justifyContent?: 'space-between' | 'center' | 'flex-start' | 'flex-end';
   alignItems?: 'space-between' | 'center' | 'flex-start' | 'flex-end';

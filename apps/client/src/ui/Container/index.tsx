@@ -26,10 +26,12 @@ const Container: React.FC<ContainerProps> = ({
   alignItems,
   flexDirection,
   backgroundColor,
+  gridGap,
 }) => {
   return (
     <ContainerMain
       style={{
+        gridGap,
         maxWidth,
         width,
         height,
