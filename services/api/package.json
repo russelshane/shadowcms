@@ -11,7 +11,10 @@
     "start:ts": "ts-node src/index.ts",
     "format": "prettier --write ./src/",
     "lint": "eslint --fix --ext .jsx,.js,.tsx,.ts ./src/",
-    "clean": "rm dist/"
+    "clean": "rm dist/",
+    "gcp-build": "tsc -p .",
+    "prepare": "npm run gcp-build",
+    "pretest": "npm run gcp-build"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
