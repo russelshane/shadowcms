@@ -17,7 +17,7 @@
     "dotenv": "^10.0.0",
     "falsey": "^1.0.0",
     "micro-memoize": "^4.0.9",
-    "pino": "^6.13.3",
+    "pino": "^7.0.3",
     "pino-pretty": "^7.0.1"
   },
   "devDependencies": {
