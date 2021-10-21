@@ -22,34 +22,44 @@ const UserTab: React.FC<UserTabProps> = ({ user }) => {
   const [menuActive, setMenuActive] = useState(false);
 
   return (
-    <Container display="flex" alignItems="center" width="auto" gridGap="10px">
-      <ChevronDownIcon style={{ width: 16, color: COLORS.foreground }} />
-      <UserName onClick={() => setMenuActive(!menuActive)}>@{user?.username}</UserName>
-      <UserAvatar
-        onClick={() => setMenuActive(!menuActive)}
-        style={{ backgroundImage: `url(${user?.avatar})` }}
-      />
-      <UserDropDown className={`${menuActive && 'active'}`}>
-        <Link to={`/by/${user.username}`}>
-          <Container width="auto" gridGap="12px" alignItems="center">
-            <UserIcon style={{ width: 16, color: COLORS.foreground }} />
-            <NavItem>Profile</NavItem>
-          </Container>
-        </Link>
-        <Link to="/help">
-          <Container width="auto" gridGap="12px" alignItems="center">
-            <SupportIcon style={{ width: 16, color: COLORS.foreground }} />
-            <NavItem>Help & Support</NavItem>
-          </Container>
-        </Link>
-        <Link to="/eject">
-          <Container width="auto" gridGap="12px" alignItems="center">
-            <LogoutIcon style={{ width: 16, color: COLORS.foreground }} />
-            <NavItem>Logout</NavItem>
-          </Container>
-        </Link>
-      </UserDropDown>
-    </Container>
+    <React.Fragment>
+      <Container width="auto">
+        <Container
+          cursor="pointer"
+          onClick={() => setMenuActive(!menuActive)}
+          width="auto"
+          display="flex"
+          gridGap="8px"
+          alignItems="center"
+        >
+          <ChevronDownIcon
+            style={{ cursor: 'pointer', width: 16, color: COLORS.foreground }}
+          />
+          <UserName>@{user?.username}</UserName>
+          <UserAvatar style={{ backgroundImage: `url(${user?.avatar})` }} />
+        </Container>
+        <UserDropDown className={`${menuActive && 'active'}`}>
+          <Link to={`/by/${user.username}`}>
+            <Container width="auto" gridGap="12px" alignItems="center">
+              <UserIcon style={{ width: 16, color: COLORS.foreground }} />
+              <NavItem>Profile</NavItem>
+            </Container>
+          </Link>
+          <Link to="/help">
+            <Container width="auto" gridGap="12px" alignItems="center">
+              <SupportIcon style={{ width: 16, color: COLORS.foreground }} />
+              <NavItem>Help & Support</NavItem>
+            </Container>
+          </Link>
+          <Link to="/eject">
+            <Container width="auto" gridGap="12px" alignItems="center">
+              <LogoutIcon style={{ width: 16, color: COLORS.foreground }} />
+              <NavItem>Logout</NavItem>
+            </Container>
+          </Link>
+        </UserDropDown>
+      </Container>
+    </React.Fragment>
   );
 };
 

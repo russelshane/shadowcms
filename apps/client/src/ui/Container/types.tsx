@@ -25,4 +25,6 @@ export type ContainerProps = {
   justifyContent?: 'space-between' | 'center' | 'flex-start' | 'flex-end';
   alignItems?: 'space-between' | 'center' | 'flex-start' | 'flex-end';
   flexDirection?: 'column' | 'row';
+  cursor?: 'pointer' | 'inherit';
+  onClick?: any;
 };

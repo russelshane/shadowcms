@@ -16,8 +16,8 @@ const Dashboard: React.FC = () => {
   return (
     <Layout title="Dashboard - Shadow">
       <Header />
-      <Wrapper margin="60px auto">
-        <Heading size="h3">Dashboard</Heading>
+      <Wrapper margin="40px auto">
+        <Heading size="h4">Dashboard</Heading>
       </Wrapper>
     </Layout>
   );

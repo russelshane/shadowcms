@@ -27,10 +27,14 @@ const Container: React.FC<ContainerProps> = ({
   flexDirection,
   backgroundColor,
   gridGap,
+  cursor,
+  onClick,
 }) => {
   return (
     <ContainerMain
+      onClick={onClick}
       style={{
+        cursor,
         gridGap,
         maxWidth,
         width,

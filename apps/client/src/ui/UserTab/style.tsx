@@ -27,7 +27,6 @@ export const UserDropDown = styled.div({
   flexDirection: 'column',
   gridGap: '20px',
   border: `1px solid ${COLORS.borders}`,
-  marginLeft: '-60px',
   display: 'none',
 
   '&.active': {
@@ -41,6 +40,7 @@ export const UserName = styled.span({
   fontFamily: 'Satoshi, sans-serif',
   color: COLORS.foreground,
   cursor: 'pointer',
+  userSelect: 'none',
 
   '&:hover': {
     color: COLORS.muted,

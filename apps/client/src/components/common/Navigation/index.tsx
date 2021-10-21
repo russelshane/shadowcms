@@ -17,6 +17,7 @@ const Navigation: React.FC<NavigationProps> = ({ direction }) => {
       display="flex"
       flexDirection={direction}
       gridGap="20px"
+      width="auto"
       alignItems="center"
     >
       {NAVIGATION_ITEMS.map((val, index) => (
