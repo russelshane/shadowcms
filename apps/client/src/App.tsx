@@ -16,6 +16,7 @@ import ScreenLoader from './ui/ScreenLoader';
  */
 const Landing = lazy(() => import('./pages/Landing'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Editor = lazy(() => import('./pages/Editor'));
 
 const Application: React.FC = () => {
   return (
@@ -25,6 +26,7 @@ const Application: React.FC = () => {
         <Switch>
           <Route exact path={ROUTES.LANDING} component={Landing} />
           <Route exact path={ROUTES.DASHBOARD} component={Dashboard} />
+          <Route exact path={ROUTES.ARTICLE_EDIT} component={Editor} />
         </Switch>
       </Suspense>
     </Router>
