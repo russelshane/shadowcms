@@ -51,7 +51,7 @@
     "@types/loadable__component": "^5.13.4",
     "@types/node": "^16.11.1",
     "@types/randomcolor": "^0.5.6",
-    "@types/react": "^17.0.30",
+    "@types/react": "^17.0.31",
     "@types/react-dom": "^17.0.9",
     "@types/react-router-dom": "^5.3.1",
     "@types/styled-components": "^5.1.15",
