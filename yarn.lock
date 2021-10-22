@@ -3225,10 +3225,10 @@
   resolved "https://registry.yarnpkg.com/@tiptap/extension-text/-/extension-text-2.0.0-beta.13.tgz#da0af8d9a3f149d20076e15d88c6af21fb6d940f"
   integrity sha512-0EtAwuRldCAoFaL/iXgkRepEeOd55rPg5N4FQUN1xTwZT7PDofukP0DG/2jff/Uj17x4uTaJAa9qlFWuNnDvjw==
 
-"@tiptap/react@^2.0.0-beta.83":
-  version "2.0.0-beta.83"
-  resolved "https://registry.yarnpkg.com/@tiptap/react/-/react-2.0.0-beta.83.tgz#e922b7e842fddf9eb4d8d51b0c9d695f03386c3b"
-  integrity sha512-7qqMz3SQAj9+p8Jc6xkvdZYuPGbTNVLErIaAQVaUF6DSPUqvHpogK//GSRpYMVNuqxZvCB4HpKk+uwnkwXADOA==
+"@tiptap/react@^2.0.0-beta.84":
+  version "2.0.0-beta.84"
+  resolved "https://registry.yarnpkg.com/@tiptap/react/-/react-2.0.0-beta.84.tgz#0503ab47c17dd53fbccf0a386c636f58fe920e0d"
+  integrity sha512-CAjY+pz8r5Xe0hxZlZCM84B9oIUEpVFOUl9a4vyUyHV50jGVHgktbi4RwulwqebR6qA8/pYj65vNjC5MAPDgZw==
   dependencies:
     "@tiptap/extension-bubble-menu" "^2.0.0-beta.42"
     "@tiptap/extension-floating-menu" "^2.0.0-beta.36"
